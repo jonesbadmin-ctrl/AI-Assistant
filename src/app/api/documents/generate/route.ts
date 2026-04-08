@@ -149,7 +149,7 @@ export async function POST(request: NextRequest) {
       filename = `${docTitle.replace(/[^a-z0-9]/gi, '_')}.pdf`
     }
 
-    return new NextResponse(buffer, {
+    return new NextResponse(buffer as Buffer, {
       headers: {
         'Content-Type': contentType,
         'Content-Disposition': `attachment; filename="${filename}"`,
