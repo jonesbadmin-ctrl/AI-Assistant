@@ -1,0 +1,63 @@
+// Prisma Schema - Database models for AI Assistant Builder
+// Works with PostgreSQL (Neon) and SQLite (local dev)
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - stores account info
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String
+  name      String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  agents Agent[]
+}
+
+// Agent model - each AI assistant a user creates
+model Agent {
+  id           String   @id @default(cuid())
+  userId       String
+  name         String
+  systemPrompt String   @default("You are a helpful assistant.")
+  model        String   @default("gpt-4o-mini")
+  apiKey       String?  // User's own OpenAI key (optional)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  // Relations
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+}
+
+// Conversation - a chat session with an agent
+model Conversation {
+  id        String   @id @default(cuid())
+  agentId   String
+  createdAt DateTime @default(now())
+
+  // Relations
+  agent   Agent    @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  messages Message[]
+}
+
+// Message - individual messages in a conversation
+model Message {
+  id             String   @id @default(cuid())
+  conversationId String
+  role           String   // "user" or "assistant"
+  content        String
+  createdAt      DateTime @default(now())
+
+  // Relations
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+}
