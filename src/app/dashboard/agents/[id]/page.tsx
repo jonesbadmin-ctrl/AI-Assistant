@@ -81,6 +81,7 @@ export default function ChatPage() {
       loadAgent()
       loadConversations()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentId])
 
   useEffect(() => {

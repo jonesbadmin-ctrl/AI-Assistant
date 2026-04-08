@@ -43,6 +43,7 @@ export default function EditAgentPage() {
 
   useEffect(() => {
     fetchAgent()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [agentId])
 
   const fetchAgent = async () => {

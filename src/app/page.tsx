@@ -209,7 +209,7 @@ export default function Home() {
           <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">About NexBot AI</h2>
           <p className="text-gray-400 text-lg leading-relaxed mb-8">
             NexBot AI is an open-source platform for building and deploying custom AI assistants. 
-            Whether you're a developer looking to create AI-powered applications or a business 
+            Whether you&apos;re a developer looking to create AI-powered applications or a business 
             needing custom chatbots, NexBot provides the tools you need.
           </p>
           <p className="text-gray-400 text-lg leading-relaxed">
