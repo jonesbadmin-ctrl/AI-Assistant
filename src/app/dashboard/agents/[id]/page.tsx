@@ -36,7 +36,7 @@ export default function ChatPage() {
 
   // Export chat as document
   const exportChat = async (type: 'docx' | 'pdf') => {
-    if (messages.length === 0) return
+    if (messages.length === 0 || !agent) return
 
     // Build content from messages
     const content = messages
