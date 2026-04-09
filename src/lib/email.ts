@@ -45,7 +45,7 @@ export async function sendWelcomeEmail(email: string, name?: string) {
             </p>
             
             <div style="text-align: center; margin: 30px 0;">
-              <a href="https://fast-carrots-buy.loca.lt/login" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+              <a href="https://ai-assistant-builder-ten.vercel.app/login" style="display: inline-block; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
                 Get Started
               </a>
             </div>
