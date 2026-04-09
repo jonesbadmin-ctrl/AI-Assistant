@@ -15,11 +15,20 @@ const globalForPrisma = globalThis as unknown as {
 
 let prisma: PrismaClient
 
+const prismaClientOptions = {
+  log: ['error', 'warn'] as ('error' | 'warn')[],
+  datasources: {
+    db: {
+      url: process.env.DATABASE_URL,
+    },
+  },
+}
+
 if (process.env.NODE_ENV === 'production') {
-  prisma = new PrismaClient()
+  prisma = new PrismaClient(prismaClientOptions)
 } else {
   if (!globalForPrisma.prisma) {
-    globalForPrisma.prisma = new PrismaClient()
+    globalForPrisma.prisma = new PrismaClient(prismaClientOptions)
   }
   prisma = globalForPrisma.prisma
 }
