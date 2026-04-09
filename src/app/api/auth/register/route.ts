@@ -19,10 +19,14 @@ const registerSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    // Simple test first
-    console.log('Testing DB connection...')
-    await prisma.$connect()
-    console.log('DB connected!')
+    // Test DB connection
+    try {
+      await prisma.$connect()
+      console.log('DB connected OK')
+    } catch (dbError) {
+      console.error('DB connection failed:', dbError)
+      return NextResponse.json({ error: 'Database connection failed' }, { status: 500 })
+    }
     
     const body = await request.json()
     const { email, password, name } = registerSchema.parse(body)
