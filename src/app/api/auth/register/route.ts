@@ -19,10 +19,14 @@ const registerSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    console.log('Registration attempt:', { url: request.url, env: process.env.DATABASE_URL ? 'DB present' : 'NO DB' })
+    // Debug: check env setup
+    const dbUrl = process.env.DATABASE_URL
+    console.log('DB URL defined:', !!dbUrl)
+    console.log('Node env:', process.env.NODE_ENV)
+    
     const body = await request.json()
     const { email, password, name } = registerSchema.parse(body)
-    console.log('Registration data:', { email, name: name || '(no name)' })
+    console.log('Registration for:', email)
 
     // Check if user already exists
     const existingUser = await prisma.user.findUnique({
@@ -68,7 +72,8 @@ export async function POST(request: Request) {
     )
   } catch (error) {
     console.error('Registration error:', error)
-    const err = error as { errors?: { message: string }[] }
+    const err = error as { errors?: { message: string }[]; cause?: string }
+    console.error('Error cause:', err.cause)
     if (err.errors) {
       return NextResponse.json(
         { error: err.errors[0].message },
