@@ -19,7 +19,7 @@ const registerSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    console.log('Registration attempt:', { url: request.url })
+    console.log('Registration attempt:', { url: request.url, env: process.env.DATABASE_URL ? 'DB present' : 'NO DB' })
     const body = await request.json()
     const { email, password, name } = registerSchema.parse(body)
     console.log('Registration data:', { email, name: name || '(no name)' })
