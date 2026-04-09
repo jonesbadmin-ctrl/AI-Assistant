@@ -19,10 +19,10 @@ const registerSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    // Debug: check env setup
-    const dbUrl = process.env.DATABASE_URL
-    console.log('DB URL defined:', !!dbUrl)
-    console.log('Node env:', process.env.NODE_ENV)
+    // Simple test first
+    console.log('Testing DB connection...')
+    await prisma.$connect()
+    console.log('DB connected!')
     
     const body = await request.json()
     const { email, password, name } = registerSchema.parse(body)
@@ -72,14 +72,6 @@ export async function POST(request: Request) {
     )
   } catch (error) {
     console.error('Registration error:', error)
-    const err = error as { errors?: { message: string }[]; cause?: string }
-    console.error('Error cause:', err.cause)
-    if (err.errors) {
-      return NextResponse.json(
-        { error: err.errors[0].message },
-        { status: 400 }
-      )
-    }
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
